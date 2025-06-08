@@ -2,6 +2,10 @@ global:
   scrape_interval: 15s
   scrape_timeout: 5s
   evaluation_interval: 15s
+
+rule_files:
+  - alert.rules
+
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
@@ -23,3 +27,10 @@ scrape_configs:
           - 'mongoexporter:9216'
         labels:
           database: mongodb
+
+alerting:
+  alertmanagers:
+    - scheme: http
+      static_configs:
+        - targets:
+          - 'alertmanager:9093'
